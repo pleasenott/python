@@ -14,9 +14,16 @@ class Test1Item(scrapy.Item):
     # lianjia
     zone_name = scrapy.Field()
     building_names = scrapy.Field()
-    total_price = scrapy.Field()  # loupan也使用该Field
     area = scrapy.Field()
     price_per_area = scrapy.Field()
+    houseInfo = scrapy.Field()
+    total_price = scrapy.Field()
+
+
+    followInfo = scrapy.Field()
+    totalPrice_totalPrice2= scrapy.Field()
+    unitPrice = scrapy.Field()
+    positionInfo = scrapy.Field()
 
     # xuetang
     class_name = scrapy.Field()

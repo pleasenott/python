@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>20212114941.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="%E5%A4%84%E7%90%86%E5%8C%97%E4%BA%AC%E7%A9%BA%E6%B0%94%E8%B4%A8%E9%87%8F%E6%95%B0%E6%8D%AE">处理北京空气质量数据。</h1>
+<p>首先读入数据</p>
+<pre class="hljs"><code><div>    filename = <span class="hljs-string">'BeijingPM20100101_20151231.csv'</span>
+    df = pd.read_csv(filename, encoding=<span class="hljs-string">'utf-8-sig'</span>)
+</div></code></pre>
+<h2 id="1%E5%AF%B9pm%E6%8C%87%E6%95%B0%E8%BF%9B%E8%A1%8C%E5%BC%82%E5%B8%B8%E5%80%BC%E7%9A%84%E5%A4%84%E7%90%86%E5%81%87%E8%AE%BEpm%E6%8C%87%E6%95%B0%E6%9C%80%E9%AB%98%E4%B8%BA500%E5%B0%86pmdongsipmdongsihuanpmnongzhanguan%E4%B8%89%E5%88%97%E4%B8%AD%E8%B6%85%E8%BF%87500%E7%9A%84%E6%95%B0%E6%8D%AE%E4%BF%AE%E6%94%B9%E4%B8%BA500">1.对PM指数进行异常值的处理：假设PM指数最高为500，将PM_Dongsi、PM_Dongsihuan、PM_Nongzhanguan三列中超过500的数据，修改为500。</h2>
+<p>先查看所有的异常值</p>
+<pre class="hljs"><code><div>    print(<span class="hljs-string">"before apply"</span>)
+    df_ads=df[df[<span class="hljs-string">'PM_Dongsi'</span>]&gt;<span class="hljs-number">500</span>]
+    print(<span class="hljs-string">"PM_Dongsi :\n"</span>,df_ads)
+    df_ads = df[df[<span class="hljs-string">'PM_Dongsihuan'</span>]&gt;<span class="hljs-number">500</span>]
+    print(<span class="hljs-string">"PM_Dongsihuan :\n"</span>,df_ads)
+    df_ads = df[df[<span class="hljs-string">'PM_Nongzhanguan'</span>]&gt;<span class="hljs-number">500</span>]
+    print(<span class="hljs-string">"PM_Nongzhanguan :\n"</span>,df_ads)
+
+</div></code></pre>
+<p>结果如下</p>
+<pre class="hljs"><code><div>before apply
+PM_Dongsi :
+           No  year  month  day  hour  ...  TEMP  cbwd    Iws  precipitation  Iprec
+27703  27704  2013      2   28     7  ...   2.0    SE  19.23            0.0    0.0
+27705  27706  2013      2   28     9  ...   2.0    cv   0.89            0.0    0.0
+27706  27707  2013      2   28    10  ...   3.0    cv   1.78            0.0    0.0
+27886  27887  2013      3    7    22  ...   6.0    NW   1.79            0.0    0.0
+28126  28127  2013      3   17    22  ...   7.0    cv   1.78            0.0    0.0
+...      ...   ...    ...  ...   ...  ...   ...   ...    ...            ...    ...
+52432  52433  2015     12   25    16  ...  -3.0    SE   7.16            0.0    0.0
+52531  52532  2015     12   29    19  ...  -3.0    cv   1.78            0.0    0.0
+52532  52533  2015     12   29    20  ...  -3.0    SE   0.89            0.0    0.0
+52533  52534  2015     12   29    21  ...  -4.0    cv   0.89            0.0    0.0
+52534  52535  2015     12   29    22  ...  -2.0    SE   1.79            0.0    0.0
+
+[70 rows x 18 columns]
+PM_Dongsihuan :
+           No  year  month  day  hour  ...  TEMP  cbwd    Iws  precipitation  Iprec
+28125  28126  2013      3   17    21  ...   8.0    cv   0.89            0.0    0.0
+28127  28128  2013      3   17    23  ...   8.0    NW   0.89            0.0    0.0
+30591  30592  2013      6   28    15  ...  27.0    SE  37.55            0.0    0.0
+30592  30593  2013      6   28    16  ...  27.0    SE  41.57            0.0    0.0
+30593  30594  2013      6   28    17  ...  27.0    SE  44.70            0.0    0.0
+...      ...   ...    ...  ...   ...  ...   ...   ...    ...            ...    ...
+52532  52533  2015     12   29    20  ...  -3.0    SE   0.89            0.0    0.0
+52533  52534  2015     12   29    21  ...  -4.0    cv   0.89            0.0    0.0
+52536  52537  2015     12   30     0  ...  -6.0    NE   1.79            0.0    0.0
+52537  52538  2015     12   30     1  ...  -5.0    NW   1.79            0.0    0.0
+52538  52539  2015     12   30     2  ...  -6.0    NE   1.79            0.0    0.0
+
+[75 rows x 18 columns]
+PM_Nongzhanguan :
+           No  year  month  day  hour  ...  TEMP  cbwd    Iws  precipitation  Iprec
+26734  26735  2013      1   18    22  ...  -6.0    NW   0.89            0.0    0.0
+26735  26736  2013      1   18    23  ...  -7.0    NW   4.02            0.0    0.0
+26736  26737  2013      1   19     0  ...  -6.0    NW   4.91            0.0    0.0
+27702  27703  2013      2   28     6  ...   2.0    SE  17.44            0.0    0.0
+28126  28127  2013      3   17    22  ...   7.0    cv   1.78            0.0    0.0
+...      ...   ...    ...  ...   ...  ...   ...   ...    ...            ...    ...
+52431  52432  2015     12   25    15  ...  -2.0    SE   5.37            0.0    0.0
+52432  52433  2015     12   25    16  ...  -3.0    SE   7.16            0.0    0.0
+52531  52532  2015     12   29    19  ...  -3.0    cv   1.78            0.0    0.0
+52532  52533  2015     12   29    20  ...  -3.0    SE   0.89            0.0    0.0
+52533  52534  2015     12   29    21  ...  -4.0    cv   0.89            0.0    0.0
+
+[81 rows x 18 columns]
+</div></code></pre>
+<p>然后按要求进行处理</p>
+<pre class="hljs"><code><div>    df[<span class="hljs-string">'PM_Dongsi'</span>] = df[<span class="hljs-string">'PM_Dongsi'</span>].apply(<span class="hljs-keyword">lambda</span> x: <span class="hljs-number">500</span> <span class="hljs-keyword">if</span> x&gt;<span class="hljs-number">500</span> <span class="hljs-keyword">else</span> x)
+    df[<span class="hljs-string">'PM_Dongsihuan'</span>] = df[<span class="hljs-string">'PM_Dongsihuan'</span>].apply(<span class="hljs-keyword">lambda</span> x: <span class="hljs-number">500</span> <span class="hljs-keyword">if</span> x&gt;<span class="hljs-number">500</span> <span class="hljs-keyword">else</span> x)
+    df[<span class="hljs-string">'PM_Nongzhanguan'</span>] = df[<span class="hljs-string">'PM_Nongzhanguan'</span>].apply(<span class="hljs-keyword">lambda</span> x: <span class="hljs-number">500</span> <span class="hljs-keyword">if</span> x&gt;<span class="hljs-number">500</span> <span class="hljs-keyword">else</span> x)
+</div></code></pre>
+<p>最后对原异常值重新查看</p>
+<pre class="hljs"><code><div>    print(<span class="hljs-string">"after apply"</span>)
+    df_ads=df[df[<span class="hljs-string">'PM_Dongsi'</span>]&gt;<span class="hljs-number">500</span>]
+    print(<span class="hljs-string">"PM_Dongsi :\n"</span>,df_ads)
+    df_ads = df[df[<span class="hljs-string">'PM_Dongsihuan'</span>]&gt;<span class="hljs-number">500</span>]
+    print(<span class="hljs-string">"PM_Dongsihuan :\n"</span>,df_ads)
+    df_ads = df[df[<span class="hljs-string">'PM_Nongzhanguan'</span>]&gt;<span class="hljs-number">500</span>]
+    print(<span class="hljs-string">"PM_Nongzhanguan :\n"</span>,df_ads)
+
+</div></code></pre>
+<p>结果如下</p>
+<pre class="hljs"><code><div>after apply
+PM_Dongsi :
+ Empty DataFrame
+Columns: [No, year, month, day, hour, season, PM_Dongsi, PM_Dongsihuan, PM_Nongzhanguan, PM_US Post, DEWP, HUMI, PRES, TEMP, cbwd, Iws, precipitation, Iprec]
+Index: []
+PM_Dongsihuan :
+ Empty DataFrame
+Columns: [No, year, month, day, hour, season, PM_Dongsi, PM_Dongsihuan, PM_Nongzhanguan, PM_US Post, DEWP, HUMI, PRES, TEMP, cbwd, Iws, precipitation, Iprec]
+Index: []
+PM_Nongzhanguan :
+ Empty DataFrame
+Columns: [No, year, month, day, hour, season, PM_Dongsi, PM_Dongsihuan, PM_Nongzhanguan, PM_US Post, DEWP, HUMI, PRES, TEMP, cbwd, Iws, precipitation, Iprec]
+Index: []
+</div></code></pre>
+<h2 id="2%E5%AF%B9pres%E5%92%8Ctemp%E6%95%B0%E6%8D%AE%E8%BF%9B%E8%A1%8C%E6%9C%80%E5%A4%A7%E6%9C%80%E5%B0%8F%E5%BD%92%E4%B8%80%E5%8C%96%E5%92%8C%E6%A0%87%E5%87%86%E5%8C%96%E5%BD%92%E4%B8%80%E5%8C%96%E5%B9%B6%E4%BD%BF%E7%94%A8%E6%95%A3%E7%82%B9%E5%9B%BE%E8%BF%9B%E8%A1%8C%E5%B1%95%E7%A4%BA">2.对PRES和TEMP数据进行最大最小归一化和标准化归一化，并使用散点图进行展示。</h2>
+<pre class="hljs"><code><div>    df[<span class="hljs-string">'PRES'</span>] = (df[<span class="hljs-string">'PRES'</span>]-df[<span class="hljs-string">'PRES'</span>].min())/(df[<span class="hljs-string">'PRES'</span>].max()-df[<span class="hljs-string">'PRES'</span>].min())
+    df[<span class="hljs-string">'TEMP'</span>] = (df[<span class="hljs-string">'TEMP'</span>]-df[<span class="hljs-string">'TEMP'</span>].min())/(df[<span class="hljs-string">'TEMP'</span>].max()-df[<span class="hljs-string">'TEMP'</span>].min())
+</div></code></pre>
+<p>使用散点图进行展示后的结果</p>
+<p><img src="file:///d:/workSpace/python/image.png" alt="Alt text"></p>
+<h3 id="3%E9%92%88%E5%AF%B9%E5%8C%97%E4%BA%AC%E6%AF%8F%E5%A4%A9%E7%9A%84pm%E5%B9%B3%E5%9D%87%E5%80%BC%E5%AF%B9%E5%A4%9A%E4%B8%AA%E6%B5%8B%E8%AF%95%E7%AB%99%E7%82%B9%E5%92%8C%E5%A4%9A%E4%B8%AA%E6%97%B6%E9%97%B4%E7%9A%84%E5%80%BC%E6%B1%82%E5%B9%B3%E5%9D%87%E7%BB%9F%E8%AE%A1%E4%B8%8D%E5%90%8C%E9%A2%9C%E8%89%B2%E4%BB%A3%E8%A1%A8%E7%9A%84%E6%8C%87%E6%95%B0%E7%AD%89%E7%BA%A7%E6%8C%87%E6%95%B0%E7%AD%89%E7%BA%A7%E8%A7%81%E8%AF%BE%E4%BB%B6%E7%AC%AC23%E9%A1%B5%E5%90%84%E6%9C%89%E5%A4%9A%E5%B0%91%E5%A4%A9">3.针对北京每天的PM平均值（对多个测试站点和多个时间的值求平均），统计不同颜色代表的指数等级（指数等级见课件第23页）各有多少天。</h3>
+<pre class="hljs"><code><div>    df[<span class="hljs-string">'PM_avg'</span>] = df[[<span class="hljs-string">'PM_Dongsi'</span>,<span class="hljs-string">'PM_Dongsihuan'</span>,<span class="hljs-string">'PM_Nongzhanguan'</span>]].mean(axis=<span class="hljs-number">1</span>)
+    print(df[<span class="hljs-string">'PM_avg'</span>])
+</div></code></pre>
+<pre class="hljs"><code><div>0               NaN
+1               NaN
+2               NaN
+3               NaN
+4               NaN
+            ...    
+52579    139.666667
+52580    168.333333
+52581    199.333333
+52582    222.333333
+52583           NaN
+</div></code></pre>
+<p>很奇怪，为什么会出现NaN，按理来说前面的已经进行过处理了啊，观察后发现，数据居然有本身就有NaN值，所以还要做个筛。</p>
+<pre class="hljs"><code><div>    df_ads = df[df[<span class="hljs-string">'PM_avg'</span>].isna()]
+    print(<span class="hljs-string">"PM_avg :\n"</span>,df_ads)
+</div></code></pre>
+<p>在对每天的PM平均值进行统计时，需要先对数据进行分组，按照年月日进行分组，然后再对每组进行统计，这里使用了transform函数，将统计结果应用到每一行。</p>
+<pre class="hljs"><code><div>   df[<span class="hljs-string">'PM_avg_day'</span>] = df.groupby([<span class="hljs-string">'year'</span>,<span class="hljs-string">'month'</span>,<span class="hljs-string">'day'</span>])[<span class="hljs-string">'PM_avg'</span>].transform(<span class="hljs-string">'mean'</span>)
+
+    <span class="hljs-comment">#print(df['PM_avg'])</span>
+    df_ads=pd.cut(df[<span class="hljs-string">'PM_avg'</span>],bins=[<span class="hljs-number">0</span>,<span class="hljs-number">50</span>,<span class="hljs-number">100</span>,<span class="hljs-number">150</span>,<span class="hljs-number">200</span>,<span class="hljs-number">300</span>,<span class="hljs-number">500</span>],labels=[<span class="hljs-string">'优'</span>,<span class="hljs-string">'良'</span>,<span class="hljs-string">'轻度污染'</span>,<span class="hljs-string">'中度污染'</span>,<span class="hljs-string">'重度污染'</span>,<span class="hljs-string">'严重污染'</span>])
+
+</div></code></pre>
+<p>最后统计结果如下</p>
+<pre class="hljs"><code><div>    df_ads = df_ads.value_counts()
+    print(df_ads)
+</div></code></pre>
+<p>显示</p>
+<pre class="hljs"><code><div>PM_avg
+优       10530
+良        6511
+轻度污染     3753
+中度污染     2010
+重度污染     1838
+严重污染      927
+</div></code></pre>
+
+</body>
+</html>

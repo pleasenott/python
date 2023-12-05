@@ -7,7 +7,7 @@ class mySpider(scrapy.spiders.Spider):
     #初始URL，即爬虫爬取的第一个URL
     def parse(self, response):  # 解析爬取的内容
         item = Test1Item()  # 生成一个在items.py中定义好的Myitem对象,用于接收爬取的
-        for each in response.xpath("xxx"):
+        for each in response.xpath('//h2[@id="1268"]/following-sibling::div/ul/li/a'):
             item['school'] = each.xpath("text()").extract()  # 学院名称在text中
             item['link'] = each.xpath("@href").extract()  # 学院链接在href中
             if (item['school'] and item['link']):  # 去掉值为空的数据
