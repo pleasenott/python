@@ -1,2 +1,2 @@
 # python
-the bupt python
+the bupt python,本项目是北京邮电大学python课程部分代码，公开原因是为方便报告中的连接引用查看，因成绩未出，代码暂不开源，本校学生抄袭必究，

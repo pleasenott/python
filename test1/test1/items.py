@@ -39,3 +39,11 @@ class Test1Item(scrapy.Item):
     room_type = scrapy.Field()
     room_area = scrapy.Field()
     average_price = scrapy.Field()
+
+    # hw
+    price=scrapy.Field()
+    name=scrapy.Field()
+    block=scrapy.Field()
+    direct=scrapy.Field()
+    house_type=scrapy.Field()
+    name_chinese=scrapy.Field()
