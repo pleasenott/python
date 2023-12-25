@@ -364,9 +364,18 @@ class LianjiaSpider(scrapy.Spider):
 ### 代码编写
 与上面的代码类似,[板块均价](he2.ipynb)
 ### 结果展示
+[北京板块均价](bjoutput.csv)
+[上海板块均价](shoutput.csv)
+[广州板块均价](gzoutput.csv)
+[深圳板块均价](szoutput.csv)
+[郑州板块均价](zzoutput.csv)
 
-![Alt text](image-15.png)
-![Alt text](image-16.png)
+这里采用散点图来表示，因为散点图能够很好的表示数据的分布情况，而且能够很好的表示数据的异常情况，比如上海的某个板块的均价就很高，这样的数据就很容易被发现。
+![Alt text](image-33.png)
+下面是各个城市的板块数量的散点图，为了能从中看出城市里不同板块中房子的数量，所以对数据进行了一些基本的归一化处理，然后再进行绘图。这里能从图上看出来，北京的板块数据相对分散，而上海的板块数据相对分散，这样的数据也能够很好的反映出城市的特点。
+![Alt text](image-32.png)
+下面对五个城市的板块价格进行了箱线图的绘制，从图中能够看出每个城市板块价格的分布情况，以及每个城市板块价格的异常情况，比如上海的某个板块的均价就很高，这样的数据就很容易被发现同时也能直观地观察到方差等数据。
+
 ![Alt text](image-17.png)
 ![Alt text](image-18.png)
 ![Alt text](image-19.png)
@@ -377,28 +386,52 @@ class LianjiaSpider(scrapy.Spider):
 比较各个城市不同朝向的单位面积租金分布情况，采用合适的图或表形式进行展示。哪个方向最高，哪个方向最低？各个城市是否一致？如果不一致，你认为原因是什么？
 
 ### 代码编写
-与上面的代码类似,[朝向租金分布](he3.ipynb)
+与上面的代码类似,[朝向租金分布](he3.ipynb) 
 ### 结果展示
+下面五张图表示了各个城市中不同朝向的比例，能看到不同城市朝向分布有很大差别，也许是受气候风俗等影响
+
 ![Alt text](image-22.png)
 ![Alt text](image-23.png)
 ![Alt text](image-24.png)
 ![Alt text](image-25.png)
 ![Alt text](image-26.png)
-![Alt text](image-27.png)
+<!-- ![Alt text](image-27.png)
 ![Alt text](image-28.png)
 ![Alt text](image-29.png)
 ![Alt text](image-30.png)
-![Alt text](image-31.png)
+![Alt text](image-31.png) -->
+<!-- <div style="overflow-x: scroll; white-space: nowrap;">
+  <img src="image-28.png" style="width: 300px; display: inline-block; margin-right: 10px;">
+  <img src="image-30.png" style="width: 300px; display: inline-block; margin-right: 10px;">
+    <img src="image-31.png" style="width: 300px; display: inline-block; margin-right: 10px;">
+    <img src="image-29.png" style="width: 300px; display: inline-block; margin-right: 10px;">
+    <img src="image-27.png" style="width: 300px; display: inline-block; margin-right: 10px;">
 
+
+</div>
+ -->
+下面是城市和朝向的单位面积价格的热力图，颜色越深，价格越低
+
+![Alt text](image-35.png)
 
 
 ## 7. 城市平均工资与租金分布关系
 
 查询各个城市的平均工资，分析并展示其和单位面积租金分布的关系。比较一下在哪个城市租房的负担最重？
+### 数据获取
 根据各地区人力资源和社会保障局所提供的数据
 
-北京,135567,11297 [数据来源](https://rsj.beijing.gov.cn/bm/ywml/202007/t20200717_1950961.html)
+- 北京,135567 11297 [数据来源](https://rsj.beijing.gov.cn/bm/ywml/202007/t20200717_1950961.html)
+- 上海 136757 11396 [数据来源](https://www.rsj.sh.gov.cn/201712333/xxgk/index.shtml)
+- 广州  130596 10883 [数据来源](http://tjj.gz.gov.cn/hdjlpt/detail?pid=2663116)
+- 深圳 164754 13729  [数据来源](http://tjj.sz.gov.cn/gkmlpt/content/10/10683/post_10683203.html#4222)
+- 郑州 93191  7766  [数据来源](https://tjj.zhengzhou.gov.cn/u/cms/tjj/statistical_2022/index.htm)
 
+中国人均居住面积 41.76平方米 [数据来源](http://finance.people.com.cn/n1/2022/0810/c1004-32499201.html)
+中国人均住房支出占比 24% [数据来源](https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1901715.html)
+### 数据分析
+
+#### 代码编写
 
 ## 8. 与2022年数据对比
 

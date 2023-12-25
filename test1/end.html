@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>end.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="2023-python%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%A4%A7%E4%BD%9C%E4%B8%9A%E7%A7%9F%E6%88%BF%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90">2023 Python程序设计大作业：租房数据分析</h1>
+<h2 id="1-%E6%95%B0%E6%8D%AE%E6%8A%93%E5%8F%96">1. 数据抓取</h2>
+<p>要求抓取链家官网北上广深4个一线城市，再加上一个离你家乡最近的一个非一线城市/或者你最感兴趣的一个城市的租房数据。</p>
+<h3 id="%E9%A1%B5%E9%9D%A2%E5%88%86%E6%9E%90">页面分析</h3>
+<p>通过谷歌浏览器提供的开发者工具，能找到租房信息的网页html中有我们所需要爬取的信息,并且都位于一个div元素下
+<code>&lt;div class=&quot;content__list&quot;&gt;&lt;/div&gt;</code></p>
+<p>所以我们可以通过这种XPath路径进行爬取，<code>response.xpath(&quot;//*[@id='content']/div[1]/div[1]/*&quot;)</code></p>
+<p>然后通过静态和动态调试，能够发现我们正确获取的所需要的信息，其中一个模块如下</p>
+<pre class="hljs"><code><div>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>
+<span class="hljs-attr">class</span>=<span class="hljs-string">"content__list--item"</span>
+<span class="hljs-attr">data-el</span>=<span class="hljs-string">"listItem"</span>
+<span class="hljs-attr">data-house_code</span>=<span class="hljs-string">"BJ1816009503133401088"</span>
+<span class="hljs-attr">data-brand_code</span>=<span class="hljs-string">"200301001000"</span>
+<span class="hljs-attr">data-ad_code</span>=<span class="hljs-string">"0"</span>
+<span class="hljs-attr">data-bid_version</span>=<span class="hljs-string">""</span>
+<span class="hljs-attr">data-c_type</span>=<span class="hljs-string">"1"</span>
+<span class="hljs-attr">data-position</span>=<span class="hljs-string">"0"</span>
+<span class="hljs-attr">data-total</span>=<span class="hljs-string">"66377"</span>
+<span class="hljs-attr">data-fb_expo_id</span>=<span class="hljs-string">"786707837408985088"</span>
+<span class="hljs-attr">data-t</span>=<span class="hljs-string">"default"</span>
+<span class="hljs-attr">data-strategy_id</span>=<span class="hljs-string">""</span>
+<span class="hljs-attr">data-click_position</span>=<span class="hljs-string">"0"</span>
+<span class="hljs-attr">data-ad_type</span>=<span class="hljs-string">"0"</span>
+<span class="hljs-attr">data-distribution_type</span>=<span class="hljs-string">"203500000001"</span>
+<span class="hljs-attr">data-event_id</span>=<span class="hljs-string">"21333"</span>
+<span class="hljs-attr">data-event_action</span>=<span class="hljs-string">"click_position=0"</span>
+<span class="hljs-attr">data-event_position</span>=<span class="hljs-string">"click_position"</span>
+<span class="hljs-attr">data-event_send</span>=<span class="hljs-string">"no"</span>
+<span class="hljs-attr">data-rank_score</span>=<span class="hljs-string">"-1"</span>
+<span class="hljs-attr">data-operation_score</span>=<span class="hljs-string">"0"</span>
+&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">a</span>
+<span class="hljs-attr">class</span>=<span class="hljs-string">"content__list--item--aside"</span> <span class="hljs-attr">target</span>=<span class="hljs-string">"_blank"</span>      <span class="hljs-attr">href</span>=<span class="hljs-string">"/zufang/BJ1816009503133401088.html"</span>
+<span class="hljs-attr">title</span>=<span class="hljs-string">"整租·乐想汇 1房间 南"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">img</span>
+    <span class="hljs-attr">alt</span>=<span class="hljs-string">"整租·乐想汇 1房间 南_乐想汇租房"</span>
+    <span class="hljs-attr">src</span>=<span class="hljs-string">"https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=20231122104722f2f"</span>
+    <span class="hljs-attr">data-src</span>=<span class="hljs-string">"https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182_1.png?_v=20231122104722f2f"</span>
+    <span class="hljs-attr">class</span>=<span class="hljs-string">"lazyload"</span>&gt;</span>
+  <span class="hljs-comment">&lt;!-- 是否展示vr图片 --&gt;</span>
+          <span class="hljs-comment">&lt;!-- 是否展示省心租图片 --&gt;</span>
+          <span class="hljs-comment">&lt;!-- 广告标签 --&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content__list--item--main"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content__list--item--title"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"twoline"</span> <span class="hljs-attr">target</span>=<span class="hljs-string">"_blank"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"/zufang/BJ1816009503133401088.html"</span>&gt;</span>
+    整租·乐想汇 1房间 南        <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+                <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content__list--item--des"</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">target</span>=<span class="hljs-string">"_blank"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"/zufang/chaoyang/"</span>&gt;</span>朝阳<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>-<span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"/zufang/beiyuan2/"</span> <span class="hljs-attr">target</span>=<span class="hljs-string">"_blank"</span>&gt;</span>北苑<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>-<span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">title</span>=<span class="hljs-string">"乐想汇"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"/zufang/c1111046126379/"</span> <span class="hljs-attr">target</span>=<span class="hljs-string">"_blank"</span>&gt;</span>乐想汇<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">i</span>&gt;</span>/<span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
+  68.00㎡
+  <span class="hljs-tag">&lt;<span class="hljs-name">i</span>&gt;</span>/<span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>南        <span class="hljs-tag">&lt;<span class="hljs-name">i</span>&gt;</span>/<span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
+    1房间1卫        <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"hide"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">i</span>&gt;</span>/<span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
+    低楼层                        （18层）
+            <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content__list--item--bottom oneline"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content__item__tag--gov_certification"</span>&gt;</span>官方核验<span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content__item__tag--is_subway_house"</span>&gt;</span>近地铁<span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content__item__tag--central_heating"</span>&gt;</span>集中供暖<span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">i</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content__item__tag--is_key"</span>&gt;</span>随时看房<span class="hljs-tag">&lt;/<span class="hljs-name">i</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content__list--item--brand oneline"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"brand"</span>&gt;</span>
+      链家          <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content__list--item--time oneline"</span>&gt;</span>2天前维护<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"content__list--item-price"</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">em</span>&gt;</span>5100<span class="hljs-tag">&lt;/<span class="hljs-name">em</span>&gt;</span> 元/月<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>通过谷歌浏览器开发者工具提供的XPath复制和查找功能，我们可以找到我们所需要的信息的XPath路径。</p>
+<p>这样创建几个对应的item，就可以将数据存储到对应的item中，然后再通过pipelines.py中的代码，将数据存储到对应的csv文件中。</p>
+<h3 id="%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99">代码编写</h3>
+<h4 id="1-%E7%88%AC%E8%99%AB%E4%BB%A3%E7%A0%81">1. 爬虫代码</h4>
+<p>使用之前的python爬虫框架，重新编写了5个爬虫（分别对应北京，上海，广州，深圳，以及郑州5个城市），并且将爬虫的代码进行了封装，使得代码更加简洁，易于阅读。</p>
+<p>下面以bj代码为例，进行说明：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> scrapy
+
+<span class="hljs-keyword">from</span> test1.items <span class="hljs-keyword">import</span> Test1Item  <span class="hljs-comment"># 从items.py中引入MyItem对象</span>
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LianjiaSpider</span><span class="hljs-params">(scrapy.Spider)</span>:</span>
+    name = <span class="hljs-string">'bj'</span>
+    allowed_domains = [<span class="hljs-string">'bj.lianjia.com'</span>]
+    <span class="hljs-comment"># https://bj.lianjia.com/zufang/pg2/</span>
+    base_url = <span class="hljs-string">'https://bj.lianjia.com/zufang/'</span>
+
+
+    maxpage = <span class="hljs-number">200</span>
+    <span class="hljs-comment"># 最大爬取页数</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, **kwargs)</span>:</span>
+        super().__init__(**kwargs)
+        self.download_delay = <span class="hljs-number">1</span>
+        <span class="hljs-keyword">with</span> open(<span class="hljs-string">"bj.txt"</span>, <span class="hljs-string">"r"</span>) <span class="hljs-keyword">as</span> f:
+            <span class="hljs-comment"># 读取上次爬取的页数</span>
+            self.begin_index = int(f.read())
+            self.page_index=self.begin_index
+            self.start_urls = [self.base_url + <span class="hljs-string">"pg"</span> + str(self.begin_index)]
+            print(self.begin_index)
+            f.close()
+        <span class="hljs-keyword">with</span> open(<span class="hljs-string">"bj.txt"</span>,<span class="hljs-string">"w"</span>) <span class="hljs-keyword">as</span> f:
+            <span class="hljs-comment"># 更新爬取的页数</span>
+            f.write(str(self.begin_index+self.maxpage))
+            f.close()
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse</span><span class="hljs-params">(self, response, **kwargs)</span>:</span>
+        <span class="hljs-keyword">for</span> each <span class="hljs-keyword">in</span> response.xpath(<span class="hljs-string">"//*[@id='content']/div[1]/div[1]/*"</span>):
+            item = Test1Item()
+            item[<span class="hljs-string">'price'</span>] = each.xpath(<span class="hljs-string">"div/span/em/text()"</span>).extract_first()
+            <span class="hljs-keyword">if</span> <span class="hljs-string">'-'</span> <span class="hljs-keyword">in</span> item[<span class="hljs-string">'price'</span>]:
+                temp = item[<span class="hljs-string">'price'</span>].split(<span class="hljs-string">"-"</span>)
+                item[<span class="hljs-string">'price'</span>] = (float(temp[<span class="hljs-number">0</span>]) + float(temp[<span class="hljs-number">1</span>])) / <span class="hljs-number">2</span>
+            temp = each.xpath(<span class="hljs-string">"div/p[1]/a/text()"</span>).extract_first()
+            <span class="hljs-comment"># 从temp中提取数据</span>
+            temp = temp.split(<span class="hljs-string">" "</span>)
+            item[<span class="hljs-string">'name'</span>] = temp[<span class="hljs-number">0</span>]
+            item[<span class="hljs-string">"house_type"</span>] = <span class="hljs-string">""</span>
+            item[<span class="hljs-string">"area"</span>] = <span class="hljs-string">""</span>
+            item[<span class="hljs-string">"direct"</span>] = <span class="hljs-string">""</span>
+            item[<span class="hljs-string">"name_chinese"</span>] = <span class="hljs-string">"北京"</span>
+            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> temp:
+                <span class="hljs-keyword">if</span> <span class="hljs-string">'室'</span> <span class="hljs-keyword">in</span> i <span class="hljs-keyword">or</span> <span class="hljs-string">'厅'</span> <span class="hljs-keyword">in</span> i <span class="hljs-keyword">or</span> <span class="hljs-string">'卫'</span> <span class="hljs-keyword">in</span> i:
+                    item[<span class="hljs-string">'house_type'</span>] = i
+                <span class="hljs-keyword">if</span> <span class="hljs-string">'东'</span> <span class="hljs-keyword">in</span> i <span class="hljs-keyword">or</span> <span class="hljs-string">'南'</span> <span class="hljs-keyword">in</span> i <span class="hljs-keyword">or</span> <span class="hljs-string">'西'</span> <span class="hljs-keyword">in</span> i <span class="hljs-keyword">or</span> <span class="hljs-string">'北'</span> <span class="hljs-keyword">in</span> i:
+                    <span class="hljs-keyword">if</span> len(i) &lt; <span class="hljs-number">5</span>:
+                        item[<span class="hljs-string">'direct'</span>] = i
+            temp = each.xpath(<span class="hljs-string">"div/p[2]/text()"</span>).extract()
+            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> temp:
+                <span class="hljs-keyword">if</span> <span class="hljs-string">'㎡'</span> <span class="hljs-keyword">in</span> i:
+                    i = i.replace(<span class="hljs-string">"㎡"</span>, <span class="hljs-string">""</span>).replace(<span class="hljs-string">" "</span>, <span class="hljs-string">""</span>).replace(<span class="hljs-string">"\n"</span>, <span class="hljs-string">""</span>)
+                    <span class="hljs-keyword">if</span> <span class="hljs-string">"-"</span> <span class="hljs-keyword">in</span> i:
+                        temp = i.split(<span class="hljs-string">"-"</span>)
+                        item[<span class="hljs-string">'area'</span>] = (float(temp[<span class="hljs-number">0</span>]) + float(temp[<span class="hljs-number">1</span>])) / <span class="hljs-number">2</span>
+                    <span class="hljs-keyword">else</span>:
+                        item[<span class="hljs-string">'area'</span>] = i
+            item[<span class="hljs-string">"block"</span>]=each.xpath(<span class="hljs-string">"div/p[2]/a[2]/text()"</span>).extract_first()
+            print(item[<span class="hljs-string">"block"</span>])
+            <span class="hljs-keyword">if</span> item[<span class="hljs-string">'price'</span>] <span class="hljs-keyword">and</span> item[<span class="hljs-string">'name'</span>] <span class="hljs-keyword">and</span> item[<span class="hljs-string">'house_type'</span>] <span class="hljs-keyword">and</span> item[<span class="hljs-string">'area'</span>] <span class="hljs-keyword">and</span> item[<span class="hljs-string">'direct'</span>] <span class="hljs-keyword">and</span> item[<span class="hljs-string">"block"</span>]:
+                <span class="hljs-keyword">yield</span> item
+        self.page_index += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">if</span> self.page_index &gt; self.maxpage+self.begin_index<span class="hljs-number">-1</span>:
+            <span class="hljs-keyword">return</span>
+        url=self.base_url+<span class="hljs-string">"pg"</span>+str(self.page_index)
+
+        print(url)
+        
+        <span class="hljs-keyword">yield</span> scrapy.Request(url, callback=self.parse)
+        <span class="hljs-comment"># 递归爬取下一页</span>
+</div></code></pre>
+<p>通过一个bj.txt文件，记录上次爬取的页数，然后通过递归爬取下一页的方式，实现了爬取多页的功能。这样在多次爬取时只需要修改爬虫的名字和pipe中输出的文件名就能实现多个城市的爬取。</p>
+<h4 id="2-%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E4%BB%A3%E7%A0%81">2. 数据处理代码</h4>
+<p>在pipelines.py中，我们对数据进行了处理，将数据存储到对应的csv文件中。</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> json
+<span class="hljs-keyword">import</span> csv
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test1Pipeline</span>:</span>
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">open_spider</span><span class="hljs-params">(self, spider)</span>:</span>
+        <span class="hljs-keyword">try</span>:
+            self.file = open(<span class="hljs-string">'zz.csv'</span>, <span class="hljs-string">"a"</span>, encoding=<span class="hljs-string">"utf-8-sig"</span>, newline=<span class="hljs-string">''</span>)
+            self.writer = csv.writer(self.file)
+        <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> err:
+            print(err)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">process_item</span><span class="hljs-params">(self, item, spider)</span>:</span>
+        list_item = [item[<span class="hljs-string">'name_chinese'</span>], item[<span class="hljs-string">'block'</span>],item[<span class="hljs-string">'house_type'</span>], item[<span class="hljs-string">'direct'</span>], item[<span class="hljs-string">'area'</span>], item[<span class="hljs-string">'price'</span>]]
+        self.writer.writerow(list_item)
+        <span class="hljs-keyword">return</span> item
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">close_spider</span><span class="hljs-params">(self, spider)</span>:</span>
+            self.file.close() <span class="hljs-comment">#关闭文件</span>
+</div></code></pre>
+<h4 id="3-%E8%BF%90%E8%A1%8C%E4%BB%A3%E7%A0%81">3. 运行代码</h4>
+<p>在main.py中，我们通过调用execute函数，运行爬虫代码。</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">from</span> scrapy <span class="hljs-keyword">import</span> cmdline
+cmdline.execute(<span class="hljs-string">"scrapy crawl zz"</span>.split())
+</div></code></pre>
+<h2 id="2-%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96">2. 数据获取</h2>
+<p>应获取每个城市的全部租房数据（一线城市的数据量应该在万的数量级）。</p>
+<h3 id="%E8%BF%90%E8%A1%8C%E4%BB%A3%E7%A0%81">运行代码</h3>
+<p>为防止爬取大量数据时，被网站封禁，我们将爬取的数据分为多次爬取，每次爬取300-500页，然后将爬取的数据存储到对应的csv文件中。</p>
+<h3 id="%E5%8F%91%E7%8E%B0%E9%97%AE%E9%A2%98">发现问题</h3>
+<p>本来以为爬取的数据量不会很大，但是在爬取的过程中，发现了一些问题：</p>
+<p>开始通过chorme浏览器发现https://bj.lianjia.com/zufang/pg1233/这个网页是存在的，但是通过爬虫爬取时，发现这个网页中的数据很不友好，实际上是重复的，这就很让人头疼。</p>
+<p>想到的解决方法是重写一下parse函数，对每个区进行遍历，如果数据再不够的话只能进行进一步细分了</p>
+<p>同样的，以bj.py 为例，进行说明：</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> scrapy
+
+<span class="hljs-keyword">from</span> test1.items <span class="hljs-keyword">import</span> Test1Item  <span class="hljs-comment"># 从items.py中引入MyItem对象</span>
+
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LianjiaSpider</span><span class="hljs-params">(scrapy.Spider)</span>:</span>
+    name = <span class="hljs-string">'bj'</span>
+    allowed_domains = [<span class="hljs-string">'bj.lianjia.com'</span>]
+    zone_list_chinese=[<span class="hljs-string">"东城"</span>,<span class="hljs-string">"西城"</span>,<span class="hljs-string">"朝阳"</span>,<span class="hljs-string">"海淀"</span>,<span class="hljs-string">"丰台"</span>,<span class="hljs-string">"石景山"</span>,<span class="hljs-string">"通州"</span>,<span class="hljs-string">"昌平"</span>,<span class="hljs-string">"大兴"</span>,<span class="hljs-string">"亦庄开发区"</span>,<span class="hljs-string">"顺义"</span>,<span class="hljs-string">"房山"</span>,<span class="hljs-string">"门头沟"</span>,<span class="hljs-string">"平谷"</span>,<span class="hljs-string">"怀柔"</span>,<span class="hljs-string">"密云"</span>,<span class="hljs-string">"延庆"</span>]
+
+    zone_list=[<span class="hljs-string">"dongcheng"</span>,<span class="hljs-string">"xicheng"</span>,<span class="hljs-string">"chaoyang"</span>,<span class="hljs-string">"haidian"</span>,<span class="hljs-string">"fengtai"</span>,<span class="hljs-string">"shijingshan"</span>,<span class="hljs-string">"tongzhou"</span>,<span class="hljs-string">"changping"</span>,<span class="hljs-string">"daxing"</span>,<span class="hljs-string">"yizhuangkaifaqu"</span>,<span class="hljs-string">"shunyi"</span>,<span class="hljs-string">"fangshan"</span>,<span class="hljs-string">"mentougou"</span>,<span class="hljs-string">"pinggu"</span>,<span class="hljs-string">"huairou"</span>,<span class="hljs-string">"miyun"</span>,<span class="hljs-string">"yanqing"</span>]
+    <span class="hljs-comment"># https://bj.lianjia.com/zufang/pg2/</span>
+    zone_list_number=[<span class="hljs-number">100</span>,<span class="hljs-number">100</span>,<span class="hljs-number">100</span>,<span class="hljs-number">100</span>,<span class="hljs-number">100</span>,<span class="hljs-number">100</span>,<span class="hljs-number">100</span>,<span class="hljs-number">100</span>,<span class="hljs-number">100</span>,<span class="hljs-number">100</span>,<span class="hljs-number">100</span>,<span class="hljs-number">100</span>,<span class="hljs-number">100</span>,<span class="hljs-number">100</span>,<span class="hljs-number">100</span>,<span class="hljs-number">100</span>]
+    base_url = <span class="hljs-string">'https://bj.lianjia.com/zufang/'</span>
+    maxpage = <span class="hljs-number">500</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, **kwargs)</span>:</span>
+        // 读取上次爬取的页数
+        super().__init__(**kwargs)
+        self.download_delay = <span class="hljs-number">1</span>
+        <span class="hljs-keyword">with</span> open(<span class="hljs-string">"bj.txt"</span>, <span class="hljs-string">"r"</span>) <span class="hljs-keyword">as</span> f:
+            temp=f.read().split(<span class="hljs-string">"\n"</span>)
+            self.zone_index=int(temp[<span class="hljs-number">0</span>])
+            self.page_index =int (temp[<span class="hljs-number">1</span>])
+
+            self.start_urls = [self.base_url +self.zone_list[self.zone_index]+<span class="hljs-string">"/pg"</span>  + str(self.page_index)]
+            print(self.zone_index,self.page_index)
+            f.close()
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse</span><span class="hljs-params">(self, response, **kwargs)</span>:</span>
+
+        <span class="hljs-keyword">for</span> each <span class="hljs-keyword">in</span> response.xpath(<span class="hljs-string">"//*[@id='content']/div[1]/div[1]/*"</span>):
+            item = Test1Item()
+            item[<span class="hljs-string">'price'</span>] = each.xpath(<span class="hljs-string">"div/span/em/text()"</span>).extract_first()
+            <span class="hljs-keyword">if</span> <span class="hljs-string">'-'</span> <span class="hljs-keyword">in</span> item[<span class="hljs-string">'price'</span>]:
+                temp = item[<span class="hljs-string">'price'</span>].split(<span class="hljs-string">"-"</span>)
+                item[<span class="hljs-string">'price'</span>] = (float(temp[<span class="hljs-number">0</span>]) + float(temp[<span class="hljs-number">1</span>])) / <span class="hljs-number">2</span>
+            temp = each.xpath(<span class="hljs-string">"div/p[1]/a/text()"</span>).extract_first()
+            <span class="hljs-comment"># 从temp中提取数据</span>
+            temp = temp.split(<span class="hljs-string">" "</span>)
+            item[<span class="hljs-string">'name'</span>] = temp[<span class="hljs-number">0</span>]
+            item[<span class="hljs-string">"house_type"</span>] = <span class="hljs-string">""</span>
+            item[<span class="hljs-string">"area"</span>] = <span class="hljs-string">""</span>
+            item[<span class="hljs-string">"direct"</span>] = <span class="hljs-string">""</span>
+            item[<span class="hljs-string">"name_chinese"</span>] = <span class="hljs-string">"北京"</span>
+            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> temp:
+                <span class="hljs-keyword">if</span> <span class="hljs-string">'室'</span> <span class="hljs-keyword">in</span> i <span class="hljs-keyword">or</span> <span class="hljs-string">'厅'</span> <span class="hljs-keyword">in</span> i <span class="hljs-keyword">or</span> <span class="hljs-string">'卫'</span> <span class="hljs-keyword">in</span> i:
+                    item[<span class="hljs-string">'house_type'</span>] = i
+                <span class="hljs-keyword">if</span> <span class="hljs-string">'东'</span> <span class="hljs-keyword">in</span> i <span class="hljs-keyword">or</span> <span class="hljs-string">'南'</span> <span class="hljs-keyword">in</span> i <span class="hljs-keyword">or</span> <span class="hljs-string">'西'</span> <span class="hljs-keyword">in</span> i <span class="hljs-keyword">or</span> <span class="hljs-string">'北'</span> <span class="hljs-keyword">in</span> i:
+                    <span class="hljs-keyword">if</span> len(i) &lt; <span class="hljs-number">5</span>:
+                        item[<span class="hljs-string">'direct'</span>] = i
+            temp = each.xpath(<span class="hljs-string">"div/p[2]/text()"</span>).extract()
+            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> temp:
+                <span class="hljs-keyword">if</span> <span class="hljs-string">'㎡'</span> <span class="hljs-keyword">in</span> i:
+                    i = i.replace(<span class="hljs-string">"㎡"</span>, <span class="hljs-string">""</span>).replace(<span class="hljs-string">" "</span>, <span class="hljs-string">""</span>).replace(<span class="hljs-string">"\n"</span>, <span class="hljs-string">""</span>)
+                    <span class="hljs-keyword">if</span> <span class="hljs-string">"-"</span> <span class="hljs-keyword">in</span> i:
+                        temp = i.split(<span class="hljs-string">"-"</span>)
+                        item[<span class="hljs-string">'area'</span>] = (float(temp[<span class="hljs-number">0</span>]) + float(temp[<span class="hljs-number">1</span>])) / <span class="hljs-number">2</span>
+                    <span class="hljs-keyword">else</span>:
+                        item[<span class="hljs-string">'area'</span>] = i
+            item[<span class="hljs-string">"block"</span>]=each.xpath(<span class="hljs-string">"div/p[2]/a[2]/text()"</span>).extract_first()
+            print(item[<span class="hljs-string">"block"</span>])
+            item[<span class="hljs-string">"zone_name"</span>] = self.zone_list_chinese[self.zone_index]
+            <span class="hljs-keyword">if</span> item[<span class="hljs-string">'price'</span>] <span class="hljs-keyword">and</span> item[<span class="hljs-string">'name'</span>] <span class="hljs-keyword">and</span> item[<span class="hljs-string">'house_type'</span>] <span class="hljs-keyword">and</span> item[<span class="hljs-string">'area'</span>] <span class="hljs-keyword">and</span> item[<span class="hljs-string">'direct'</span>] <span class="hljs-keyword">and</span> item[<span class="hljs-string">"block"</span>]:
+                <span class="hljs-keyword">yield</span> item
+        <span class="hljs-keyword">if</span> self.maxpage &lt;= <span class="hljs-number">0</span>:
+            <span class="hljs-comment"># 爬取完毕，这样写很丑陋，但是我写在析构函数里面不会执行不知道为什么，也许是框架本身就不甚严谨</span>
+            <span class="hljs-keyword">with</span> open(<span class="hljs-string">"bj.txt"</span>, <span class="hljs-string">"w"</span>) <span class="hljs-keyword">as</span> f:
+                f.write(str(self.zone_index))
+                f.write(<span class="hljs-string">"\n"</span>)
+                f.write(str(self.page_index))
+                f.close()
+            <span class="hljs-keyword">return</span>
+        // 通过判断是否有下一页，来决定是否进行下一页的爬取
+        <span class="hljs-keyword">if</span> response.xpath(<span class="hljs-string">"//*[@id='content']/div[1]/div[2]/@data-totalpage"</span>).extract_first() :
+            self.zone_list_number[self.zone_index]=int(response.xpath(<span class="hljs-string">"//*[@id='content']/div[1]/div[2]/@data-totalpage"</span>).extract_first())
+            print(<span class="hljs-string">"self.zone_list_number[self.zone_index]"</span>,self.zone_list_number[self.zone_index])
+        self.page_index += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">if</span> self.zone_index &lt; len(self.zone_list):
+            <span class="hljs-keyword">if</span> self.page_index &lt;= self.zone_list_number[self.zone_index]:
+                url=self.base_url+self.zone_list[self.zone_index]+<span class="hljs-string">"/pg"</span>+str(self.page_index)
+            <span class="hljs-keyword">else</span>:
+                self.page_index = <span class="hljs-number">1</span>
+                url = self.base_url + self.zone_list[self.zone_index]
+                self.zone_index += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">with</span> open(<span class="hljs-string">"bj.txt"</span>, <span class="hljs-string">"w"</span>) <span class="hljs-keyword">as</span> f:
+                f.write(str(self.zone_index))
+                f.write(<span class="hljs-string">"\n"</span>)
+                f.write(str(self.page_index))
+                f.close()
+            <span class="hljs-keyword">return</span>
+        self.maxpage -= <span class="hljs-number">1</span>
+        <span class="hljs-keyword">yield</span> scrapy.Request(url, callback=self.parse)
+</div></code></pre>
+<h2 id="3-%E6%80%BB%E4%BD%93%E6%88%BF%E7%A7%9F%E6%83%85%E5%86%B5%E6%AF%94%E8%BE%83">3. 总体房租情况比较</h2>
+<p>比较5个城市的总体房租情况，包含租金的均价、最高价、最低价、中位数等信息，单位面积租金（元/平米）的均价、最高价、最低价、中位数等信息。</p>
+<h3 id="%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99">代码编写</h3>
+<p>这里使用jupyter进行编写，因为能方便的进行输出，以及进行数据的可视化。看起来会舒服许多许多
+不过缺点是有点长了，所以这里仅仅加入一个引用的代码<a href="he.ipynb">总体和户型</a></p>
+<h3 id="%E7%BB%93%E6%9E%9C%E5%B1%95%E7%A4%BA">结果展示</h3>
+<p><img src="image.png" alt="Alt text">
+<img src="image-1.png" alt="Alt text">
+<img src="image-2.png" alt="Alt text">
+<img src="image-3.png" alt="Alt text">
+<img src="image-4.png" alt="Alt text">
+<img src="image-5.png" alt="Alt text">
+<img src="image-6.png" alt="Alt text">
+<img src="image-7.png" alt="Alt text"></p>
+<h2 id="4-%E4%B8%8D%E5%90%8C%E6%88%B7%E5%9E%8B%E6%AF%94%E8%BE%83">4. 不同户型比较</h2>
+<p>比较5个城市一居、二居、三居的情况，包含均价、最高价、最低价、中位数等信息，采用合适的图或表形式进行展示。</p>
+<h3 id="%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99">代码编写</h3>
+<p>与上面的代码类似，这里仅仅加入一个引用的代码<a href="he.ipynb">总体和户型</a></p>
+<h3 id="%E7%BB%93%E6%9E%9C%E5%B1%95%E7%A4%BA">结果展示</h3>
+<p><img src="image-8.png" alt="Alt text">
+<img src="image-9.png" alt="Alt text">
+<img src="image-10.png" alt="Alt text">
+<img src="image-11.png" alt="Alt text">
+<img src="image-12.png" alt="Alt text">
+<img src="image-13.png" alt="Alt text">
+<img src="image-14.png" alt="Alt text"></p>
+<h2 id="5-%E6%9D%BF%E5%9D%97%E5%9D%87%E4%BB%B7%E6%AF%94%E8%BE%83">5. 板块均价比较</h2>
+<p>计算和分析每个城市不同板块的均价情况，并采用合适的图或表形式进行展示。例如上图中的“海淀-四季青-五福玲珑居北区”，“四季青”即为板块名称。</p>
+<h3 id="%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99">代码编写</h3>
+<p>与上面的代码类似,<a href="he2.ipynb">板块均价</a></p>
+<h3 id="%E7%BB%93%E6%9E%9C%E5%B1%95%E7%A4%BA">结果展示</h3>
+<p><a href="bjoutput.csv">北京板块均价</a>
+<a href="shoutput.csv">上海板块均价</a>
+<a href="gzoutput.csv">广州板块均价</a>
+<a href="szoutput.csv">深圳板块均价</a>
+<a href="zzoutput.csv">郑州板块均价</a></p>
+<p>这里采用散点图来表示，因为散点图能够很好的表示数据的分布情况，而且能够很好的表示数据的异常情况，比如上海的某个板块的均价就很高，这样的数据就很容易被发现。
+<img src="image-33.png" alt="Alt text">
+下面是各个城市的板块数量的散点图，为了能从中看出城市里不同板块中房子的数量，所以对数据进行了一些基本的归一化处理，然后再进行绘图。这里能从图上看出来，北京的板块数据相对分散，而上海的板块数据相对分散，这样的数据也能够很好的反映出城市的特点。
+<img src="image-32.png" alt="Alt text">
+下面对五个城市的板块价格进行了箱线图的绘制，从图中能够看出每个城市板块价格的分布情况，以及每个城市板块价格的异常情况，比如上海的某个板块的均价就很高，这样的数据就很容易被发现同时也能直观地观察到方差等数据。</p>
+<p><img src="image-17.png" alt="Alt text">
+<img src="image-18.png" alt="Alt text">
+<img src="image-19.png" alt="Alt text">
+<img src="image-20.png" alt="Alt text">
+<img src="image-21.png" alt="Alt text"></p>
+<h2 id="6-%E6%9C%9D%E5%90%91%E7%A7%9F%E9%87%91%E5%88%86%E5%B8%83%E6%AF%94%E8%BE%83">6. 朝向租金分布比较</h2>
+<p>比较各个城市不同朝向的单位面积租金分布情况，采用合适的图或表形式进行展示。哪个方向最高，哪个方向最低？各个城市是否一致？如果不一致，你认为原因是什么？</p>
+<h3 id="%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99">代码编写</h3>
+<p>与上面的代码类似,<a href="he3.ipynb">朝向租金分布</a></p>
+<h3 id="%E7%BB%93%E6%9E%9C%E5%B1%95%E7%A4%BA">结果展示</h3>
+<p>下面五张图表示了各个城市中不同朝向的比例，能看到不同城市朝向分布有很大差别，也许是受气候风俗等影响</p>
+<p><img src="image-22.png" alt="Alt text">
+<img src="image-23.png" alt="Alt text">
+<img src="image-24.png" alt="Alt text">
+<img src="image-25.png" alt="Alt text">
+<img src="image-26.png" alt="Alt text"></p>
+<!-- ![Alt text](image-27.png)
+![Alt text](image-28.png)
+![Alt text](image-29.png)
+![Alt text](image-30.png)
+![Alt text](image-31.png) -->
+<div style="overflow-x: scroll; white-space: nowrap;">
+  <img src="image-28.png" style="width: 300px; display: inline-block; margin-right: 10px;">
+  <img src="image-30.png" style="width: 300px; display: inline-block; margin-right: 10px;">
+    <img src="image-31.png" style="width: 300px; display: inline-block; margin-right: 10px;">
+    <img src="image-29.png" style="width: 300px; display: inline-block; margin-right: 10px;">
+    <img src="image-27.png" style="width: 300px; display: inline-block; margin-right: 10px;">
+  <!-- 添加更多图片 -->
+</div>
+下面是城市和朝向的单位面积价格的热力图，颜色越深，价格越低
+<p><img src="image-35.png" alt="Alt text"></p>
+<h2 id="7-%E5%9F%8E%E5%B8%82%E5%B9%B3%E5%9D%87%E5%B7%A5%E8%B5%84%E4%B8%8E%E7%A7%9F%E9%87%91%E5%88%86%E5%B8%83%E5%85%B3%E7%B3%BB">7. 城市平均工资与租金分布关系</h2>
+<p>查询各个城市的平均工资，分析并展示其和单位面积租金分布的关系。比较一下在哪个城市租房的负担最重？</p>
+<h3 id="%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96">数据获取</h3>
+<p>根据各地区人力资源和社会保障局所提供的数据</p>
+<ul>
+<li>北京,135567 11297 <a href="https://rsj.beijing.gov.cn/bm/ywml/202007/t20200717_1950961.html">数据来源</a></li>
+<li>上海 136757 11396 <a href="https://www.rsj.sh.gov.cn/201712333/xxgk/index.shtml">数据来源</a></li>
+<li>广州  130596 10883 <a href="http://tjj.gz.gov.cn/hdjlpt/detail?pid=2663116">数据来源</a></li>
+<li>深圳 164754 13729  <a href="http://tjj.sz.gov.cn/gkmlpt/content/10/10683/post_10683203.html#4222">数据来源</a></li>
+<li>郑州 93191  7766  <a href="https://tjj.zhengzhou.gov.cn/u/cms/tjj/statistical_2022/index.htm">数据来源</a></li>
+</ul>
+<p>中国人均居住面积 41.76平方米 <a href="http://finance.people.com.cn/n1/2022/0810/c1004-32499201.html">数据来源</a>
+中国人均住房支出占比 24% <a href="https://www.stats.gov.cn/sj/zxfb/202302/t20230203_1901715.html">数据来源</a></p>
+<h3 id="%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90">数据分析</h3>
+<h4 id="%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99">代码编写</h4>
+<h2 id="8-%E4%B8%8E2022%E5%B9%B4%E6%95%B0%E6%8D%AE%E5%AF%B9%E6%AF%94">8. 与2022年数据对比</h2>
+<p>与2022年的租房数据进行对比（只比较北上广深4个城市，原始数据会给出），总结你观察到的变化情况，并用图、表、文字等支撑你得到的结论。</p>
+<h3 id="%E4%BB%A3%E7%A0%81%E7%BC%96%E5%86%99">代码编写</h3>
+<p>因为2022年的租房数据格式是json，所以需要一个程序进行转化</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> json
+<span class="hljs-keyword">import</span> csv
+<span class="hljs-keyword">import</span> os
+file_list_chinese=[<span class="hljs-string">'北京'</span>,<span class="hljs-string">'上海'</span>,<span class="hljs-string">'广州'</span>,<span class="hljs-string">'深圳'</span>]
+filename_list=[<span class="hljs-string">"BeijingHouseInfo.json"</span>,<span class="hljs-string">"ShanghaiHouseInfo.json"</span>,<span class="hljs-string">"GuangzhouHouseInfo.json"</span>,<span class="hljs-string">"ShenzhenHouseInfo.json"</span>]
+file_list=[<span class="hljs-string">"bj"</span>,<span class="hljs-string">"sh"</span>,<span class="hljs-string">"gz"</span>,<span class="hljs-string">"sz"</span>]
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">4</span>):
+    <span class="hljs-keyword">with</span> open(filename_list[i],<span class="hljs-string">'r'</span>,encoding=<span class="hljs-string">'utf-8'</span>) <span class="hljs-keyword">as</span> f:
+        <span class="hljs-keyword">with</span> open(file_list[i]+<span class="hljs-string">'.csv'</span>,<span class="hljs-string">'w'</span>,encoding=<span class="hljs-string">'utf-8'</span>,newline=<span class="hljs-string">''</span>) <span class="hljs-keyword">as</span> f1:
+            writer=csv.writer(f1)
+            writer.writerow([<span class="hljs-string">'name_chinese'</span>,<span class="hljs-string">'block'</span>,<span class="hljs-string">'house_type'</span>,<span class="hljs-string">'direct'</span>,<span class="hljs-string">'area'</span>,<span class="hljs-string">'price'</span>])
+            <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> f.readlines():
+                dic=json.loads(line)
+                writer.writerow([file_list_chinese[i],dic[<span class="hljs-string">'district'</span>],dic[<span class="hljs-string">'layout'</span>],dic[<span class="hljs-string">'direction'</span>].split(<span class="hljs-string">" "</span>)[<span class="hljs-number">0</span>],dic[<span class="hljs-string">'area'</span>],dic[<span class="hljs-string">'total_price'</span>]])
+</div></code></pre>
+<h2 id="10-%E6%8F%90%E4%BA%A4%E8%A6%81%E6%B1%82">10. 提交要求</h2>
+<p>以pdf格式提交到教学云平台上，文件名为学号，总页数不超过30页。</p>
+<h2 id="11-%E6%88%AA%E6%AD%A2%E6%97%B6%E9%97%B4">11. 截止时间</h2>
+<p>截止时间为2024年1月6日23:59。</p>
+
+</body>
+</html>
