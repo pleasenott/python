@@ -12,73 +12,8 @@
 所以我们可以通过这种XPath路径进行爬取，`response.xpath("//*[@id='content']/div[1]/div[1]/*")`
 
 然后通过静态和动态调试，能够发现我们正确获取的所需要的信息，其中一个模块如下
-```html
-    <div
-class="content__list--item"
-data-el="listItem"
-data-house_code="BJ1816009503133401088"
-data-brand_code="200301001000"
-data-ad_code="0"
-data-bid_version=""
-data-c_type="1"
-data-position="0"
-data-total="66377"
-data-fb_expo_id="786707837408985088"
-data-t="default"
-data-strategy_id=""
-data-click_position="0"
-data-ad_type="0"
-data-distribution_type="203500000001"
-data-event_id="21333"
-data-event_action="click_position=0"
-data-event_position="click_position"
-data-event_send="no"
-data-rank_score="-1"
-data-operation_score="0"
->
-<a
-class="content__list--item--aside" target="_blank"      href="/zufang/BJ1816009503133401088.html"
-title="整租·乐想汇 1房间 南">
-  <img
-    alt="整租·乐想汇 1房间 南_乐想汇租房"
-    src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=20231122104722f2f"
-    data-src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182_1.png?_v=20231122104722f2f"
-    class="lazyload">
-  <!-- 是否展示vr图片 -->
-          <!-- 是否展示省心租图片 -->
-          <!-- 广告标签 -->
-      </a>
-<div class="content__list--item--main">
-<p class="content__list--item--title">
-  <a class="twoline" target="_blank" href="/zufang/BJ1816009503133401088.html">
-    整租·乐想汇 1房间 南        </a>
-                </p>
-<p class="content__list--item--des">
-          <a target="_blank" href="/zufang/chaoyang/">朝阳</a>-<a href="/zufang/beiyuan2/" target="_blank">北苑</a>-<a title="乐想汇" href="/zufang/c1111046126379/" target="_blank">乐想汇</a>
-  <i>/</i>
-  68.00㎡
-  <i>/</i>南        <i>/</i>
-    1房间1卫        <span class="hide">
-    <i>/</i>
-    低楼层                        （18层）
-            </span>
-</p>
-<p class="content__list--item--bottom oneline">
-      <i class="content__item__tag--gov_certification">官方核验</i>
-      <i class="content__item__tag--is_subway_house">近地铁</i>
-      <i class="content__item__tag--central_heating">集中供暖</i>
-      <i class="content__item__tag--is_key">随时看房</i>
-      </p>
-<p class="content__list--item--brand oneline">
-            <span class="brand">
-      链家          </span>
-          <span class="content__list--item--time oneline">2天前维护</span>
-</p>
-      <span class="content__list--item-price"><em>5100</em> 元/月</span>
-</div>
+[因长度过大，选择插入链接](https://github.com/pleasenott/python/blob/main/da.html)
 
-</div>
-```
 通过谷歌浏览器开发者工具提供的XPath复制和查找功能，我们可以找到我们所需要的信息的XPath路径。
 
 这样创建几个对应的item，就可以将数据存储到对应的item中，然后再通过pipelines.py中的代码，将数据存储到对应的csv文件中。
@@ -180,7 +115,7 @@ class Test1Pipeline:
 
     def open_spider(self, spider):
         try:
-            self.file = open('zz.csv', "a", encoding="utf-8-sig", newline='')
+            self.file = open('zz.csv', "a", encoding="utf-8-sig", newline='')#这里的zz表示郑州，可以修改为其他城市的名字
             self.writer = csv.writer(self.file)
         except Exception as err:
             print(err)
@@ -218,103 +153,24 @@ cmdline.execute("scrapy crawl zz".split())
 
 开始通过chorme浏览器发现https://bj.lianjia.com/zufang/pg1233/这个网页是存在的，但是通过爬虫爬取时，发现这个网页中的数据很不友好，实际上是重复的，这就很让人头疼。
 
-想到的解决方法是重写一下parse函数，对每个区进行遍历，如果数据再不够的话只能进行进一步细分了
-
-同样的，以bj.py 为例，进行说明：
+想到的解决方法是重写一下parse函数，对每个区进行遍历，后面发现对区进行遍历都不甚足够，所以改为对板块进行遍历，由于板块较多，为了不修改代码框架，所以另写一个爬虫，将板块的数据爬取下来，然后再通过板块的数据进行遍历，这样就能够爬取到所有的数据了。
 
 ```python
-import scrapy
-
-from test1.items import Test1Item  # 从items.py中引入MyItem对象
-
-
-class LianjiaSpider(scrapy.Spider):
-    name = 'bj'
-    allowed_domains = ['bj.lianjia.com']
-    zone_list_chinese=["东城","西城","朝阳","海淀","丰台","石景山","通州","昌平","大兴","亦庄开发区","顺义","房山","门头沟","平谷","怀柔","密云","延庆"]
-
-    zone_list=["dongcheng","xicheng","chaoyang","haidian","fengtai","shijingshan","tongzhou","changping","daxing","yizhuangkaifaqu","shunyi","fangshan","mentougou","pinggu","huairou","miyun","yanqing"]
-    # https://bj.lianjia.com/zufang/pg2/
-    zone_list_number=[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100]
-    base_url = 'https://bj.lianjia.com/zufang/'
-    maxpage = 500
-    def __init__(self, **kwargs):
-        // 读取上次爬取的页数
-        super().__init__(**kwargs)
-        self.download_delay = 1
-        with open("bj.txt", "r") as f:
-            temp=f.read().split("\n")
-            self.zone_index=int(temp[0])
-            self.page_index =int (temp[1])
-
-            self.start_urls = [self.base_url +self.zone_list[self.zone_index]+"/pg"  + str(self.page_index)]
-            print(self.zone_index,self.page_index)
-            f.close()
-    def parse(self, response, **kwargs):
-
-        for each in response.xpath("//*[@id='content']/div[1]/div[1]/*"):
-            item = Test1Item()
-            item['price'] = each.xpath("div/span/em/text()").extract_first()
-            if '-' in item['price']:
-                temp = item['price'].split("-")
-                item['price'] = (float(temp[0]) + float(temp[1])) / 2
-            temp = each.xpath("div/p[1]/a/text()").extract_first()
-            # 从temp中提取数据
-            temp = temp.split(" ")
-            item['name'] = temp[0]
-            item["house_type"] = ""
-            item["area"] = ""
-            item["direct"] = ""
-            item["name_chinese"] = "北京"
-            for i in temp:
-                if '室' in i or '厅' in i or '卫' in i:
-                    item['house_type'] = i
-                if '东' in i or '南' in i or '西' in i or '北' in i:
-                    if len(i) < 5:
-                        item['direct'] = i
-            temp = each.xpath("div/p[2]/text()").extract()
-            for i in temp:
-                if '㎡' in i:
-                    i = i.replace("㎡", "").replace(" ", "").replace("\n", "")
-                    if "-" in i:
-                        temp = i.split("-")
-                        item['area'] = (float(temp[0]) + float(temp[1])) / 2
-                    else:
-                        item['area'] = i
-            item["block"]=each.xpath("div/p[2]/a[2]/text()").extract_first()
-            print(item["block"])
-            item["zone_name"] = self.zone_list_chinese[self.zone_index]
-            if item['price'] and item['name'] and item['house_type'] and item['area'] and item['direct'] and item["block"]:
-                yield item
-        if self.maxpage <= 0:
-            # 爬取完毕，这样写很丑陋，但是我写在析构函数里面不会执行不知道为什么，也许是框架本身就不甚严谨
-            with open("bj.txt", "w") as f:
-                f.write(str(self.zone_index))
-                f.write("\n")
-                f.write(str(self.page_index))
-                f.close()
-            return
-        // 通过判断是否有下一页，来决定是否进行下一页的爬取
-        if response.xpath("//*[@id='content']/div[1]/div[2]/@data-totalpage").extract_first() :
-            self.zone_list_number[self.zone_index]=int(response.xpath("//*[@id='content']/div[1]/div[2]/@data-totalpage").extract_first())
-            print("self.zone_list_number[self.zone_index]",self.zone_list_number[self.zone_index])
-        self.page_index += 1
-        if self.zone_index < len(self.zone_list):
-            if self.page_index <= self.zone_list_number[self.zone_index]:
-                url=self.base_url+self.zone_list[self.zone_index]+"/pg"+str(self.page_index)
-            else:
-                self.page_index = 1
-                url = self.base_url + self.zone_list[self.zone_index]
-                self.zone_index += 1
-        else:
-            with open("bj.txt", "w") as f:
-                f.write(str(self.zone_index))
-                f.write("\n")
-                f.write(str(self.page_index))
-                f.close()
-            return
-        self.maxpage -= 1
-        yield scrapy.Request(url, callback=self.parse)
+filename="tool.txt"
+        with open(filename, "a") as f:
+            for each in response.xpath("//*[@id='filter']/ul[4]/*"):  # 遍历可选的板块
+                data_id = each.xpath("@data-id").extract_first()
+                if data_id is None or data_id == "0":  # 板块选项的第一个是不限，跳过
+                    continue
+                newblock = each.xpath("a/@href").extract_first()
+                newblock = newblock.replace("/zufang/", "").replace("/", "")
+                if newblock not in self.out_list:
+                    self.out_list.append(newblock)
+                    f.write("\""+newblock +"\",")
+            if self.num<len(self.zone_list):
+                url = self.base_url + self.zone_list[self.num] + "/pg1"
+                self.num=self.num+1
+                yield scrapy.Request(url, callback=self.parse)
 ```
 
 
@@ -328,15 +184,19 @@ class LianjiaSpider(scrapy.Spider):
 
 ### 代码编写
 这里使用jupyter进行编写，因为能方便的进行输出，以及进行数据的可视化。看起来会舒服许多许多
-不过缺点是有点长了，所以这里仅仅加入一个引用的代码[总体和户型](he.ipynb)
+不过缺点是有点长了，所以这里仅仅加入一个引用的代码[总体和户型](https://github.com/pleasenott/python/blob/main/test1/he.ipynb)
 
 ### 结果展示
+总体房价如下图所示，能看到不同城市的数据有很大差别，参考平均数或者中位数的话，能发现深圳的房价最高，郑州的房价最低，
 ![Alt text](image.png)
 ![Alt text](image-1.png)
 ![Alt text](image-2.png)
 ![Alt text](image-3.png)
 ![Alt text](image-4.png)
 ![Alt text](image-5.png)
+
+广州的数据十分奇怪，能看到极低的最低价，经查找后发现并非是因为爬取错误导致的，也没有必要去除特殊值。
+
 ![Alt text](image-6.png)
 ![Alt text](image-7.png)
 
@@ -345,9 +205,10 @@ class LianjiaSpider(scrapy.Spider):
 比较5个城市一居、二居、三居的情况，包含均价、最高价、最低价、中位数等信息，采用合适的图或表形式进行展示。
 
 ### 代码编写
-与上面的代码类似，这里仅仅加入一个引用的代码[总体和户型](he.ipynb)
+与上面的代码类似，这里仅仅加入一个引用的代码[总体和户型](https://github.com/pleasenott/python/blob/main/test1/he.ipynb)
 
 ### 结果展示
+下面是不同户型的数据，能看到不同城市的数据有很大差别，参考平均数或者中位数的话，能发现大部分城市都是三居价格最高，但是单位面积价格一居最高。
 ![Alt text](image-8.png)
 ![Alt text](image-9.png)
 ![Alt text](image-10.png)
@@ -362,17 +223,26 @@ class LianjiaSpider(scrapy.Spider):
 
 计算和分析每个城市不同板块的均价情况，并采用合适的图或表形式进行展示。例如上图中的“海淀-四季青-五福玲珑居北区”，“四季青”即为板块名称。
 ### 代码编写
-与上面的代码类似,[板块均价](he2.ipynb)
+与上面的代码类似,[板块均价](https://github.com/pleasenott/python/blob/main/test1/he2.ipynb)
 ### 结果展示
-[北京板块均价](bjoutput.csv)
-[上海板块均价](shoutput.csv)
-[广州板块均价](gzoutput.csv)
-[深圳板块均价](szoutput.csv)
-[郑州板块均价](zzoutput.csv)
+以北京数据为例，展示一小部分
+- 安定门,7562.777777777777
+- 安贞,8072.0
+- 朝阳门外,11015.08510638298
+- 朝阳门内,9965.333333333334
+- 崇文门,11040.795918367347
+
+总的数据在下面的文件中
+
+[北京板块均价](https://github.com/pleasenott/python/blob/main/test1/bjoutput.csv)
+[上海板块均价](https://github.com/pleasenott/python/blob/main/test1/shoutput.csv)
+[广州板块均价](https://github.com/pleasenott/python/blob/main/test1/gzoutput.csv)
+[深圳板块均价](https://github.com/pleasenott/python/blob/main/test1/szoutput.csv)
+[郑州板块均价](https://github.com/pleasenott/python/blob/main/test1/zzoutput.csv)
 
 这里采用散点图来表示，因为散点图能够很好的表示数据的分布情况，而且能够很好的表示数据的异常情况，比如上海的某个板块的均价就很高，这样的数据就很容易被发现。
 ![Alt text](image-33.png)
-下面是各个城市的板块数量的散点图，为了能从中看出城市里不同板块中房子的数量，所以对数据进行了一些基本的归一化处理，然后再进行绘图。这里能从图上看出来，北京的板块数据相对分散，而上海的板块数据相对分散，这样的数据也能够很好的反映出城市的特点。
+下面是各个城市的板块数量的散点图，为了能从中看出城市里不同板块中房子的数量，所以对数据进行了一些基本的归一化处理，然后再进行绘图。这里能从图上看出来，北京的板块数据相对分散，而上海的板块数据相对集中，这样的数据也能够很好的反映出城市的特点。
 ![Alt text](image-32.png)
 下面对五个城市的板块价格进行了箱线图的绘制，从图中能够看出每个城市板块价格的分布情况，以及每个城市板块价格的异常情况，比如上海的某个板块的均价就很高，这样的数据就很容易被发现同时也能直观地观察到方差等数据。
 
@@ -386,7 +256,7 @@ class LianjiaSpider(scrapy.Spider):
 比较各个城市不同朝向的单位面积租金分布情况，采用合适的图或表形式进行展示。哪个方向最高，哪个方向最低？各个城市是否一致？如果不一致，你认为原因是什么？
 
 ### 代码编写
-与上面的代码类似,[朝向租金分布](he3.ipynb) 
+与上面的代码类似,[朝向租金分布](https://github.com/pleasenott/python/blob/main/test1/he3.ipynb) 
 ### 结果展示
 下面五张图表示了各个城市中不同朝向的比例，能看到不同城市朝向分布有很大差别，也许是受气候风俗等影响
 
@@ -410,7 +280,7 @@ class LianjiaSpider(scrapy.Spider):
 
 </div>
  -->
-下面是城市和朝向的单位面积价格的热力图，颜色越深，价格越低
+下面是城市和朝向的单位面积价格的热力图，颜色越深，价格越低，不同朝向对房价的影响不甚明显，数据中所有城市南向租金都相对较低，这里或许是因为南向的房子数据更多，不容易产生偏差导致的，
 
 ![Alt text](image-35.png)
 
@@ -433,6 +303,17 @@ class LianjiaSpider(scrapy.Spider):
 
 #### 代码编写
 
+```python
+plt.hist(df_list[i]['price']/df_list[i]['area'].astype('float64'),bins=100,label=citynamelist_chinese[i],alpha=0.5)
+```
+#### 结果展示
+下面是各个城市的平均工资和租金的数据图，放在一起方便对比，能看到深圳的收入最高，郑州的收入最低。但是感觉不够直观，因为深圳的房价也最高。所以后面又绘制了6个图来进行比较
+
+![Alt text](image-54.png)![Alt text](image-47.png)
+
+下面6个图是单位面积租金分布和平均工资对应租房月支出的对比图，其中计算逻辑为：中国人均住房支出占比*平均工资/人均居住面积，能看到北京和上海的租房负担最重，郑州的租房负担最轻，依靠着平均工资能租起绝大多数房子
+
+![Alt text](image-48.png)![Alt text](image-49.png)![Alt text](image-50.png)![Alt text](image-51.png)![Alt text](image-52.png)![Alt text](image-53.png)
 ## 8. 与2022年数据对比
 
 与2022年的租房数据进行对比（只比较北上广深4个城市，原始数据会给出），总结你观察到的变化情况，并用图、表、文字等支撑你得到的结论。
@@ -454,8 +335,46 @@ for i in range(4):
                 dic=json.loads(line)
                 writer.writerow([file_list_chinese[i],dic['district'],dic['layout'],dic['direction'].split(" ")[0],dic['area'],dic['total_price']])
 ```
+通过百分比变化率来衡量变化情况，考虑到如无特殊情况出现，所属板块，朝向，室型变化应该不大，所以这里将阈值设置较高，
+```python
+plt.rcParams['font.sans-serif'] = ['SimHei']
+for i in range(len(citynamelist)):
+    for datatype in ["direct","house_type"]:
+        for j in range(len(result_2022[i][datatype])):
+            print(result_2022[i][datatype].index[j])
+            if result_2022[i][datatype].index[j]=="nan":#做平均后出现非数了，就跳过
+                continue
+            #对比一下数据，差距大就输出
+            if (abs(result_2022[i][datatype][result_2022[i][datatype].index[j]]-result_2023[i][datatype][result_2022[i][datatype].index[j]])/result_2022[i][datatype][result_2022[i][datatype].index[j]])>0.2:
+                print(result_2022[i][datatype][result_2022[i][datatype].index[j]])
+                print(result_2023[i][datatype][result_2022[i][datatype].index[j]])
+                plt.bar([citynamelist_chinese[i]+"2022",citynamelist_chinese[i]+"2023"],[result_2022[i][datatype][result_2022[i][datatype].index[j]],result_2023[i][datatype][result_2022[i][datatype].index[j]]])
+                plt.title(citynamelist_chinese[i]+datatype+result_2022[i][datatype].index[j])
+                plt.show()
+
+```
+[完整代码](https://github.com/pleasenott/python/blob/main/test1/he5.ipynb)
+### 结果展示
+
+首先是转化后的数据，这里只展示了北京的数据，其他城市的数据在对应的文件夹中
+
+北京,安定门,1室1厅1卫,东,42.92,5200
+
+其他数据列在下面
+
+[北京](https://github.com/pleasenott/python/blob/main/test1/RawData/bj.csv)
+[上海](https://github.com/pleasenott/python/blob/main/test1/RawData/sh.csv)
+[广州](https://github.com/pleasenott/python/blob/main/test1/RawData/gz.csv)
+[深圳](https://github.com/pleasenott/python/blob/main/test1/RawData/sz.csv)
 
 
+
+### 结果分析
+观察到数据变化较大的是深圳的户型，其中1室的房子数量变化超过了设定的阈值20%，而其他数据的变化都在阈值之内，查询资料后发现，深圳相关部门正努力改善居住环境，提高人均居住面积，详见[关于进一步加大居住用地供应的若干措施](http://sf.sz.gov.cn/ztzl/gfxwj/cnqkfk_171009/content/post_9051624.html)，所以一室租房数量下降也是正常的。
+![Alt text](image-56.png)
+
+对于单位面积价格的对比，能看到四个城市房价均有所下降，其中深圳价格下降最快，广州价格基本没有变化，北京上海增长率位于深圳和广州之间。
+![Alt text](image-58.png)
 ## 10. 提交要求
 
 以pdf格式提交到教学云平台上，文件名为学号，总页数不超过30页。

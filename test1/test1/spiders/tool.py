@@ -1,30 +1,8 @@
 import scrapy
-
-from test1.items import Test1Item  # 从items.py中引入MyItem对象
-
-
+from test1.items import Test1Item  
 class LianjiaSpider(scrapy.Spider):
     name = 'tool'
     allowed_domains = ['zz.lianjia.com']
-    """
-二七区
-中原区
-管城回族区
-惠济区
-金水区
-郑东新区
-荥阳市
-新郑市
-上街区
-巩义市
-新密市
-登封市
-中牟县
-郑州经济技术开发区
-郑州高新技术产业开发区
-航空港区
-
-"""
     zone_list_chinese = ["二七区", "中原区", "管城回族区", "惠济区", "金水区", "郑东新区", "荥阳市", "新郑市", "上街区",
                          "巩义市", "新密市", "登封市", "中牟县", "郑州经济技术开发区", "郑州高新技术产业开发区",
                          "航空港区"]
@@ -42,12 +20,6 @@ class LianjiaSpider(scrapy.Spider):
         self.download_delay = 1
         self.start_urls = [self.base_url +self.zone_list[0]+"/pg1"]
         print(self.zone_list[0])
-
-
-
-
-    #析构函数
-
     def parse(self, response, **kwargs):
 
         filename="tool.txt"
