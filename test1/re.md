@@ -9,9 +9,76 @@
 
 所以我们可以通过这种XPath路径进行爬取，`response.xpath("//*[@id='content']/div[1]/div[1]/*")`
 
-然后通过静态和动态调试，能够发现我们正确获取的所需要的信息，其中一个模块如下
+
 
 [因长度过大，选择插入链接](https://github.com/pleasenott/python/blob/main/da.html)
+
+然后通过静态和动态调试，能够发现我们正确获取的所需要的信息，其中一个模块如下
+
+```html
+<div class="content__list--item"
+data-el="listItem"
+data-house_code="580191"
+data-brand_code="200306015473"
+data-ad_code="92217242489341624"
+data-c_type="1"
+data-position="1"
+data-total="66377"
+data-fb_expo_id="786707837408985089"
+data-t="default"
+data-strategy_id=""
+data-click_position="1"
+data-ad_type="250"
+data-bid_version="v92217577549218912"
+data-distribution_type="203500000002"
+>
+<a class="link" target="_blank" data-id="580191" href="/apartment/66276.html">
+<!-- 左边图片 -->
+<a
+class="content__list--item--aside" target="_blank"      href="/apartment/66276.html"
+title="独栋·自隅青年公寓 程远公寓 豪华开间 开间">
+  <img
+  alt="独栋·自隅青年公寓 程远公寓 豪华开间 开间_程远大厦租房"
+  src="https://s1.ljcdn.com/matrix_pc/dist/pc/src/resource/default/250-182.png?_v=20231122104722f2f"
+  data-src="https://image1.ljcdn.com/wanjia/21363289d06c57ec84b060c24f7d72ba-1693296506006/b95470325b1577cd5d8a79aa43ec8a87.jpg.250x182.jpg"
+  class="lazyload">
+  <!-- 是否展示vr图片 -->
+          <!-- 广告标签 -->
+      </a>
+<!-- 右边内容 -->
+<div class="content__list--item--main">
+<!-- title -->
+<p class="content__list--item--title twoline">
+  <a target="_blank" href="/apartment/66276.html">
+    独栋·自隅青年公寓 程远公寓 豪华开间 开间        </a>
+</p>
+<!-- house info -->
+<p class="content__list--item--des">
+            <span class="room__left">仅剩5间</span>
+    <i>/</i>
+          22.00-32.00㎡
+  <i>/</i>5间在租        <i>/</i>
+  1室0厅1卫      </p>
+<!-- tags -->
+<p class="content__list--item--bottom oneline">
+            <i class="content__item__tag--authorization_apartment">独栋公寓</i>
+            <i class="content__item__tag--rent_period_month">月租</i>
+            <i class="content__item__tag--decoration">精装</i>
+            <i class="content__item__tag--open_kitchen">开放厨房</i>
+        </p>
+<!-- brand -->
+<p class="content__list--item--brand oneline">
+            <span class="brand">
+      自隅青年公寓          </span>
+          <span class="content__list--item--time">14天前维护</span>
+</p>
+<!-- gr -->
+      <!-- price -->
+<span class="content__list--item-price"><em>4700-5200</em> 元/月</span>
+</div>
+</a>
+</div>
+```
 
 通过谷歌浏览器开发者工具提供的XPath复制和查找功能，我们可以找到我们所需要的信息的XPath路径。
 
