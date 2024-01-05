@@ -2,8 +2,6 @@
 
 ## 1. 数据抓取
 
-要求抓取链家官网北上广深4个一线城市，再加上一个离你家乡最近的一个非一线城市/或者你最感兴趣的一个城市的租房数据。
-
 ### 页面分析
 
 通过谷歌浏览器提供的开发者工具，能找到租房信息的网页html中有我们所需要爬取的信息,并且都位于一个div元素下
@@ -12,6 +10,7 @@
 所以我们可以通过这种XPath路径进行爬取，`response.xpath("//*[@id='content']/div[1]/div[1]/*")`
 
 然后通过静态和动态调试，能够发现我们正确获取的所需要的信息，其中一个模块如下
+
 [因长度过大，选择插入链接](https://github.com/pleasenott/python/blob/main/da.html)
 
 通过谷歌浏览器开发者工具提供的XPath复制和查找功能，我们可以找到我们所需要的信息的XPath路径。
@@ -141,7 +140,6 @@ cmdline.execute("scrapy crawl zz".split())
 
 ## 2. 数据获取
 
-应获取每个城市的全部租房数据（一线城市的数据量应该在万的数量级）。
 
 ### 运行代码
 
@@ -180,7 +178,6 @@ filename="tool.txt"
 
 ## 3. 总体房租情况比较
 
-比较5个城市的总体房租情况，包含租金的均价、最高价、最低价、中位数等信息，单位面积租金（元/平米）的均价、最高价、最低价、中位数等信息。
 
 ### 代码编写
 这里使用jupyter进行编写，因为能方便的进行输出，以及进行数据的可视化。看起来会舒服许多许多
@@ -206,6 +203,35 @@ filename="tool.txt"
 
 ### 代码编写
 与上面的代码类似，这里仅仅加入一个引用的代码[总体和户型](https://github.com/pleasenott/python/blob/main/test1/he.ipynb)
+同时部分代码展示如下
+```python
+plt.figure(figsize=(10, 6))
+plt.bar(result.keys(), [result[i]["租金的最高价"] for i in result.keys()], width=0.5,color="blue")
+#对每个柱子进行标注
+for a,b in zip(result.keys(), [result[i]["租金的最高价"] for i in result.keys()]):
+    plt.text(a, b+15, '%.2f' % b, ha='center', va= 'bottom',fontsize=11)
+plt.title("租金最高价")
+plt.show()
+```
+
+对户型的转化处理，将不属于123居的户型数据丢弃掉
+```python
+for i in range(len(citynamelist)):
+    df_list[i]["house_type"]=df_list[i]["house_type"].apply(get_house_type)
+    df_list[i]=df_list[i].drop(df_list[i][df_list[i]["house_type"]>3].index)
+    df_list[i]=df_list[i].drop(df_list[i][df_list[i]["house_type"]<1].index)
+    df_list[i]=df_list[i].dropna()
+    df_list[i]=df_list[i].drop_duplicates()
+    df_list[i]=df_list[i].reset_index(drop=True)
+    print(citynamelist_chinese[i]+"的数据数量为：",len(df_list[i]))
+
+北京的数据数量为： 34705
+上海的数据数量为： 25714
+广州的数据数量为： 42807
+深圳的数据数量为： 16220
+郑州的数据数量为： 19014
+```
+
 
 ### 结果展示
 下面是不同户型的数据，能看到不同城市的数据有很大差别，参考平均数或者中位数的话，能发现大部分城市都是三居价格最高，但是单位面积价格一居最高。
@@ -221,9 +247,25 @@ filename="tool.txt"
 
 ## 5. 板块均价比较
 
-计算和分析每个城市不同板块的均价情况，并采用合适的图或表形式进行展示。例如上图中的“海淀-四季青-五福玲珑居北区”，“四季青”即为板块名称。
 ### 代码编写
 与上面的代码类似,[板块均价](https://github.com/pleasenott/python/blob/main/test1/he2.ipynb)
+同时部分代码如下
+    
+```python
+    plt.rcParams['font.sans-serif'] = ['SimHei']
+for i in range(len(citynamelist)):
+    plt.figure(figsize=(3,5))
+    cityname=citynamelist[i]
+    df=df_list[i]
+    block_list=df["block"].unique()
+    block_price_list=[]
+    for block in block_list:
+        block_price_list.append(df[df["block"]==block]["price"].mean())
+    plt.boxplot(block_price_list)
+    plt.title(citynamelist_chinese[i])
+    plt.ylabel("均价(元/月)")
+```
+
 ### 结果展示
 以北京数据为例，展示一小部分
 - 安定门,7562.777777777777
@@ -241,9 +283,13 @@ filename="tool.txt"
 [郑州板块均价](https://github.com/pleasenott/python/blob/main/test1/zzoutput.csv)
 
 这里采用散点图来表示，因为散点图能够很好的表示数据的分布情况，而且能够很好的表示数据的异常情况，比如上海的某个板块的均价就很高，这样的数据就很容易被发现。
+
 ![Alt text](image-33.png)
+
 下面是各个城市的板块数量的散点图，为了能从中看出城市里不同板块中房子的数量，所以对数据进行了一些基本的归一化处理，然后再进行绘图。这里能从图上看出来，北京的板块数据相对分散，而上海的板块数据相对集中，这样的数据也能够很好的反映出城市的特点。
+
 ![Alt text](image-32.png)
+
 下面对五个城市的板块价格进行了箱线图的绘制，从图中能够看出每个城市板块价格的分布情况，以及每个城市板块价格的异常情况，比如上海的某个板块的均价就很高，这样的数据就很容易被发现同时也能直观地观察到方差等数据。
 
 ![Alt text](image-17.png)
@@ -251,12 +297,36 @@ filename="tool.txt"
 ![Alt text](image-19.png)
 ![Alt text](image-20.png)
 ![Alt text](image-21.png)
+
 ## 6. 朝向租金分布比较
 
 比较各个城市不同朝向的单位面积租金分布情况，采用合适的图或表形式进行展示。哪个方向最高，哪个方向最低？各个城市是否一致？如果不一致，你认为原因是什么？
 
 ### 代码编写
-与上面的代码类似,[朝向租金分布](https://github.com/pleasenott/python/blob/main/test1/he3.ipynb) 
+
+与上面的代码类似,[朝向租金分布总代码](https://github.com/pleasenott/python/blob/main/test1/he3.ipynb) 
+
+同时部分代码如下
+
+```python
+plt.rcParams['font.sans-serif'] = ['SimHei']
+plt.rcParams['axes.unicode_minus'] = False
+for i in range(len(citynamelist)):
+    plt.figure(figsize=(6,6))
+    plt.pie(result[citynamelist_chinese[i]],labels=result[citynamelist_chinese[i]].index,autopct='%1.1f%%', shadow=True,explode=[0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1],
+        radius=1.0)
+    plt.title(citynamelist_chinese[i]+"的房源朝向分布")
+    #plt.savefig(citynamelist_chinese[i]+"的房源朝向分布.png")
+    plt.show()
+```
+下面是热力图的绘画
+```python
+for i in range(len(citynamelist)):
+    plt.figure(figsize=(10,6))
+    print()
+    sns.heatmap(df_list[i].groupby(["direct","name_chinese"])["price"].mean().unstack(),annot=True,fmt='.0f',cmap='RdYlGn_r')
+    plt.title(citynamelist_chinese[i]+"的房源朝向与板块的平均价格")
+```
 ### 结果展示
 下面五张图表示了各个城市中不同朝向的比例，能看到不同城市朝向分布有很大差别，也许是受气候风俗等影响
 
@@ -311,12 +381,12 @@ plt.hist(df_list[i]['price']/df_list[i]['area'].astype('float64'),bins=100,label
 
 ![Alt text](image-54.png)![Alt text](image-47.png)
 
-下面6个图是单位面积租金分布和平均工资对应租房月支出的对比图，其中计算逻辑为：中国人均住房支出占比*平均工资/人均居住面积，能看到北京和上海的租房负担最重，郑州的租房负担最轻，依靠着平均工资能租起绝大多数房子
+下面6个图是单位面积租金分布和平均工资对应租房月支出的对比图，其中计算逻辑为：中国人均住房支出占比*平均工资/人均居住面积，能看到北京和上海的租房负担最重，郑州的租房负担最轻，平均工资能租起绝大多数房子
 
 ![Alt text](image-48.png)![Alt text](image-49.png)![Alt text](image-50.png)![Alt text](image-51.png)![Alt text](image-52.png)![Alt text](image-53.png)
 ## 8. 与2022年数据对比
 
-与2022年的租房数据进行对比（只比较北上广深4个城市，原始数据会给出），总结你观察到的变化情况，并用图、表、文字等支撑你得到的结论。
+
 ### 代码编写
 因为2022年的租房数据格式是json，所以需要一个程序进行转化
 ```python
@@ -370,15 +440,9 @@ for i in range(len(citynamelist)):
 
 
 ### 结果分析
-观察到数据变化较大的是深圳的户型，其中1室的房子数量变化超过了设定的阈值20%，而其他数据的变化都在阈值之内，查询资料后发现，深圳相关部门正努力改善居住环境，提高人均居住面积，详见[关于进一步加大居住用地供应的若干措施](http://sf.sz.gov.cn/ztzl/gfxwj/cnqkfk_171009/content/post_9051624.html)，所以一室租房数量下降也是正常的。
+观察到数据变化较大的是深圳的户型，其中1室的房子数量变化超过了设定的阈值20%，而其他数据的变化都在阈值之内，查询资料后发现，深圳相关部门正努力改善居住环境，提高人均居住面积，详见[关于进一步加大居住用地供应的若干措施](http://sf.sz.gov.cn/ztzl/gfxwj/cnqkfk_171009/content/post_9051624.html)
+，所以一室租房数量下降也是正常的。
 ![Alt text](image-56.png)
 
 对于单位面积价格的对比，能看到四个城市房价均有所下降，其中深圳价格下降最快，广州价格基本没有变化，北京上海增长率位于深圳和广州之间。
 ![Alt text](image-58.png)
-## 10. 提交要求
-
-以pdf格式提交到教学云平台上，文件名为学号，总页数不超过30页。
-
-## 11. 截止时间
-
-截止时间为2024年1月6日23:59。
